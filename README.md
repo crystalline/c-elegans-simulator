@@ -16,9 +16,26 @@
 ### Запуск
 Симулятор написан на языке Common Lisp, для запуска понадобится реализация CL (разработка производится на SBCL, но и на Clozure CL успешно проводились тесты) а также библиотеки Lispbuilder-SDL и Lispbuilder-SDL-gfx. Симулятор кроссплатформенный, тестировался на 32- и 64-битных реализациях CL на ОС Linux и Windows, главное чтобы были доступны используемые библиотеки и DLL для них.
 
-Самый простой способ установки библиотек - установка через [Quicklisp](http://www.quicklisp.org/beta/).
+Установка SBCL в ОС Debian и Ubuntu производится просто:
 
-После установки Quicklisp установите библиотеки, набрав в REPL
+	sudo apt-get install sbcl
+
+Самый простой способ установки библиотек - установка через [Quicklisp](http://www.quicklisp.org/beta/). Quicklisp устанавливается вот так:
+
+	wget http://beta.quicklisp.org/quicklisp.lisp
+	sbcl --load quicklisp.lisp
+	
+Далее запускаем sbcl в той же консоли и набираем в REPL:
+	
+	(quicklisp-quickstart:install)
+	(ql:add-to-init-file)
+	(quit)
+
+Заметьте что для установки остальных библиотек в системе должны быть доступны DLL библиотеки SDL и SDL-gfx, обычно в Debian-подобных ОС (в т.ч. Ubuntu) их можно утсановить командой
+
+    sudo apt-get install libsdl1.2-dev libsdl-gfx1.2-dev 
+
+После установки Quicklisp установите библиотеки, набрав в REPL вашей лисп-системы
 
     (ql:quickload "lispbuilder-sdl")
     (ql:quickload "lispbuilder-sdl-gfx")
@@ -38,6 +55,10 @@
 
 ### Видео
 http://vimeo.com/66661947
+
+### Литература
+1. "Towards a virtual C. elegans: A framework for simulation and visualization of the neuromuscular system in a 3D physical environment"
+2. "На пути к виртуальному организму под управлением цифровой копии его нервной системы: результаты и перспективы для нематоды С. Elegans" http://litcey.ru/informatika/28911/index.html
 
 ### This is a physical simulation of C.Elegans-like nematode (worm).
 
