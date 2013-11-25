@@ -25,18 +25,17 @@
 
 ;(declaim (optimize (safety 0) (speed 3) (debug 0)))
 
-;(require 'lispbuilder-sdl)
-;(require 'lispbuilder-sdl-gfx)
-
 ;(ql:quickload 'lispbuilder-sdl)
 ;(ql:quickload 'lispbuilder-sdl-gfx) 
 
 (defpackage :wormsim
-  (:use :cl :lispbuilder-sdl :lispbuilder-sdl-gfx))
-
+   (:use :cl)
+   (:export :start-sim :stop-sim :reset-sim :toggle-pause-sim))
 (in-package :wormsim)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmacro def (&rest args) `(defparameter ,@args))
 
 ;Worm model tunable parameters
 
@@ -546,47 +545,44 @@
 			(setf res i)))
 	res))
 
-(setf sys (make-worm worm-sections worm-lines
-                     worm-section-spacing
-					 worm-stiffness worm-point-mass
-					 #'R-worm))
-					 
+(def sys nil)
+(def indices nil)
+(def ground-line nil)
+(def left-lines nil)
+(def right-lines nil)
+
+(defun create-initial-conditions ()
+  (setf sys (make-worm worm-sections worm-lines
+                       worm-section-spacing
+                       worm-stiffness worm-point-mass
+                       #'R-worm))
 ;Muscle indices in lines
-(def indices (build-list worm-sections (lambda (x) x)))
-(def ground-line (get-line 0))
-(def left-lines (list (get-line 1) (get-line 2)))
-(def right-lines (list (get-line 5) (get-line 6)))
+  (setf indices (build-list worm-sections (lambda (x) x)))
+  (setf ground-line (get-line 0))
+  (setf left-lines (list (get-line 1) (get-line 2)))
+  (setf right-lines (list (get-line 5) (get-line 6))))
 
-
-
-;(defun run ()
-;	;Start application threads
-;	(let ((sim (ccl:process-run-function "sim" #'sim-thread))
-;		  (graphics (ccl:process-run-function "draw" #'draw-thread)))
-;	    (ccl:join-process
-; sim)
-;		(ccl:join-process graphics)))
-;
-;(run)
-
-(defun run ()
-    (setf sim-active t)
-	;Start application threads
-	(let ((sim (sb-thread:make-thread  #'sim-thread))
-		  (graphics (sb-thread:make-thread  #'draw-thread)))
-	    (sb-thread:join-thread sim)
-		(sb-thread:join-thread graphics)))
-
+;Running simulation and graphics threads
 (def sim-thread nil)
 (def gr-thread nil)
 
 (defun start-sim ()
+  (when (not sys)
+    (create-initial-conditions))
   (setf sim-active t)
   (setf sim-thread (sb-thread:make-thread  #'sim-thread))
   (setf gr-thread (sb-thread:make-thread  #'draw-thread)))
 
 (defun stop-sim ()
   (setf sim-active nil)
-  (sb-thread:terminate-thread gr-thread))
+  (sb-thread:terminate-thread gr-thread)
+  (sb-thread:terminate-thread sim-thread))
 
-;(run)
+(defun reset-sim ()
+  (setf sim-active nil)
+  (sb-thread:terminate-thread gr-thread)
+  (sb-thread:terminate-thread sim-thread)
+  (create-initial-conditions))
+  
+(defun toggle-pause-sim ()
+  (setf pause-sim (not pause-sim)))

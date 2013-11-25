@@ -1,6 +1,6 @@
 ;(defvar pi 3.14159265)
 
-; Copyright (C) 2013, Kirka
+; Copyright (C) 2013, Crystalline
 
 ;   Permission is hereby granted, free of charge, to any person obtaining a copy of
 ;this software and associated documentation files (the "Software"), to deal in
@@ -20,11 +20,11 @@
 ;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;SOFTWARE.
 
+(in-package :wormsim)
+
 (defun @ (a i) (elt a i))
 
 (defun I (x) x)
-
-(defmacro def (&rest args) `(defparameter ,@args))
 
 (defun build-list-helper (size proc)
   (if (eq size -1)
@@ -46,7 +46,7 @@
   (sqrt (reduce #'+ (mapcar (lambda (x) (* x x)) lst))))
 
 (defun m*v (mat lst)
-  (mapcar (lambda (row) (reduce #'+ (mapcar * row autolst)))
+  (mapcar (lambda (row) (reduce #'+ (mapcar * row lst)))
        mat))
 	   
 (defun s*v (s v)

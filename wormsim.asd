@@ -4,6 +4,6 @@
   :license "MIT"
   :author "Crystalline Emerald"
   :version "0.1"
-  :depends-on (:lispbuilder-sdl :lispbuilder-sdl-gfx)
   :serial t
+  :depends-on (:lispbuilder-sdl :lispbuilder-sdl-gfx)
   :components ((:file "sim") (:file "lib3d")))
