@@ -1,6 +1,6 @@
 ;Mass-Spring Simulator with anisotropic friction, used for modeling of worm loosely based on C.Elegans
 
-; Copyright (C) 2013, Kirka
+; Copyright (C) 2013, Crystalline
 
 ;   Permission is hereby granted, free of charge, to any person obtaining a copy of
 ;this software and associated documentation files (the "Software"), to deal in
@@ -25,19 +25,16 @@
 
 ;(declaim (optimize (safety 0) (speed 3) (debug 0)))
 
-(require 'lispbuilder-sdl)
-(require 'lispbuilder-sdl-gfx)
+;(require 'lispbuilder-sdl)
+;(require 'lispbuilder-sdl-gfx)
 
 ;(ql:quickload 'lispbuilder-sdl)
 ;(ql:quickload 'lispbuilder-sdl-gfx) 
 
-(load "lib3d.lisp")
+(defpackage :wormsim
+  (:use :cl :lispbuilder-sdl :lispbuilder-sdl-gfx))
 
-;(defpackage :wormsim
-;  (:use :common-lisp :lispbuilder-sdl))
-
-;(in-package :wormsim)
-
+(in-package :wormsim)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
