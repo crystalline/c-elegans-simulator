@@ -1,5 +1,6 @@
 
-## Симулятор физической модели передвижения нематоды Caenorhabditis elegans
+## Симулятор физической модели передвижения 
+## Caenorhabditis elegans
 
 ![Фото окна с работающим симулятором](https://raw.github.com/crystalline/C-Elegans-simulator/master/img/img0.png)
 
