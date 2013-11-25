@@ -560,7 +560,8 @@
   (setf indices (build-list worm-sections (lambda (x) x)))
   (setf ground-line (get-line 0))
   (setf left-lines (list (get-line 1) (get-line 2)))
-  (setf right-lines (list (get-line 5) (get-line 6))))
+  (setf right-lines (list (get-line 5) (get-line 6)))
+  t)
 
 ;Running simulation and graphics threads
 (def sim-thread nil)
@@ -575,14 +576,13 @@
 
 (defun stop-sim ()
   (setf sim-active nil)
-  (sb-thread:terminate-thread gr-thread)
-  (sb-thread:terminate-thread sim-thread))
+  (when (sb-thread:thread-alive-p gr-thread)
+  	(sb-thread:terminate-thread gr-thread))
+  (when (sb-thread:thread-alive-p sim-thread)
+	(sb-thread:terminate-thread sim-thread)))
 
 (defun reset-sim ()
-  (setf sim-active nil)
-  (sb-thread:terminate-thread gr-thread)
-  (sb-thread:terminate-thread sim-thread)
   (create-initial-conditions))
-  
+
 (defun toggle-pause-sim ()
   (setf pause-sim (not pause-sim)))
