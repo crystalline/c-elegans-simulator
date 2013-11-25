@@ -1,7 +1,7 @@
 
-## Симулятор модели Caenorhabditis elegans
+## Симулятор физической модели передвижения нематоды Caenorhabditis elegans
 
-![Фото окна с работмающим симулятором](https://raw.github.com/crystalline/C-Elegans-simulator/master/img/img0.png)
+![Фото окна с работающим симулятором](https://raw.github.com/crystalline/C-Elegans-simulator/master/img/img0.png)
 
 Это - физический симулятор организма похожего на нематоду C.Elegans.
 Цель проекта - демонстрация поведения аналогичного поведению моделируемого живого организма (хемотаксис, фототаксис, разные режимы движения).
@@ -19,21 +19,25 @@
 Самый простой способ установки библиотек - установка через (http://www.quicklisp.org/beta/ "Quicklisp").
 
 После установки Quicklisp установите библиотеки, набрав в REPL
+
     (ql:quickload "lispbuilder-sdl")
     (ql:quickload "lispbuilder-sdl-gfx")
 
 Компиляцию симулятора удобно производить через (http://common-lisp.net/project/asdf/ "ASDF"), предположим что симулятор находится в папке /path/to/wormsim
+
     (push (pathname "/path/to/wormsim/") asdf:*central-registry*)
     (asdf:load-system :wormsim)
 
 Теперь симулятор скомпилирован и его можно запустить:
+
 	(wormsim:start-sim)
 
 И остановить
+
 	(wormsim:stop-sim)
 
 ### Видео
-(http://vimeo.com/66661947)
+http://vimeo.com/66661947
 
 ### This is a physical simulation of C.Elegans-like nematode (worm).
 
